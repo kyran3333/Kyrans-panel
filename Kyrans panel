@@ -1,0 +1,126 @@
+wait("0,2")
+-- Create the GUI
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local WalkSpeedLabel = Instance.new("TextLabel")
+local WalkSpeedSlider = Instance.new("TextButton")
+local JumpPowerLabel = Instance.new("TextLabel")
+local JumpPowerSlider = Instance.new("TextButton")
+local DiscordButton = Instance.new("TextButton")
+local RejoinButton = Instance.new("TextButton")
+
+-- Set properties for ScreenGui
+ScreenGui.Name = "EnhancedGUI"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Set properties for MainFrame
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)
+MainFrame.Size = UDim2.new(0, 300, 0, 300)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+-- Create WalkSpeed Label
+WalkSpeedLabel.Parent = MainFrame
+WalkSpeedLabel.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+WalkSpeedLabel.Size = UDim2.new(0, 280, 0, 30)
+WalkSpeedLabel.Position = UDim2.new(0, 10, 0, 10)
+WalkSpeedLabel.Font = Enum.Font.SourceSans
+WalkSpeedLabel.Text = "WalkSpeed: 16"
+WalkSpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+WalkSpeedLabel.TextSize = 18
+
+-- Create WalkSpeed Slider
+WalkSpeedSlider.Parent = MainFrame
+WalkSpeedSlider.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+WalkSpeedSlider.Size = UDim2.new(0, 280, 0, 30)
+WalkSpeedSlider.Position = UDim2.new(0, 10, 0, 50)
+WalkSpeedSlider.Text = "Adjust WalkSpeed"
+WalkSpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+WalkSpeedSlider.TextSize = 18
+
+-- Functionality for WalkSpeed
+local currentWalkSpeed = 16
+WalkSpeedSlider.MouseButton1Click:Connect(function()
+    currentWalkSpeed = currentWalkSpeed + 2
+    if currentWalkSpeed > 100 then currentWalkSpeed = 16 end
+    WalkSpeedLabel.Text = "WalkSpeed: " .. currentWalkSpeed
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.WalkSpeed = currentWalkSpeed
+    end
+end)
+
+-- Create JumpPower Label
+JumpPowerLabel.Parent = MainFrame
+JumpPowerLabel.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+JumpPowerLabel.Size = UDim2.new(0, 280, 0, 30)
+JumpPowerLabel.Position = UDim2.new(0, 10, 0, 90)
+JumpPowerLabel.Font = Enum.Font.SourceSans
+JumpPowerLabel.Text = "JumpPower: 50"
+JumpPowerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpPowerLabel.TextSize = 18
+
+-- Create JumpPower Slider
+JumpPowerSlider.Parent = MainFrame
+JumpPowerSlider.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+JumpPowerSlider.Size = UDim2.new(0, 280, 0, 30)
+JumpPowerSlider.Position = UDim2.new(0, 10, 0, 130)
+JumpPowerSlider.Text = "Adjust JumpPower"
+JumpPowerSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpPowerSlider.TextSize = 18
+
+-- Functionality for JumpPower
+local currentJumpPower = 50
+JumpPowerSlider.MouseButton1Click:Connect(function()
+    currentJumpPower = currentJumpPower + 10
+    if currentJumpPower > 200 then currentJumpPower = 50 end
+    JumpPowerLabel.Text = "JumpPower: " .. currentJumpPower
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.JumpPower = currentJumpPower
+    end
+end)
+
+-- Create Discord Button
+DiscordButton.Parent = MainFrame
+DiscordButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+DiscordButton.Size = UDim2.new(0, 280, 0, 30)
+DiscordButton.Position = UDim2.new(0, 10, 0, 170)
+DiscordButton.Font = Enum.Font.SourceSans
+DiscordButton.Text = "Join Discord Server"
+DiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+DiscordButton.TextSize = 18
+
+DiscordButton.MouseButton1Click:Connect(function()
+    local url = "https://discord.gg/https://discord.gg/hgDmNpwkBw" -- Replace with your Discord server invite link
+    setclipboard(url)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Discord Link Copied",
+        Text = "The Discord invite link has been copied to your clipboard!",
+        Duration = 5
+    })
+end)
+
+-- Create Rejoin Button
+RejoinButton.Parent = MainFrame
+RejoinButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+RejoinButton.Size = UDim2.new(0, 280, 0, 30)
+RejoinButton.Position = UDim2.new(0, 10, 0, 210)
+RejoinButton.Font = Enum.Font.SourceSans
+RejoinButton.Text = "Rejoin Game"
+RejoinButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+RejoinButton.TextSize = 18
+
+RejoinButton.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    game:GetService("TeleportService"):Teleport(game.PlaceId, player)
+end)
